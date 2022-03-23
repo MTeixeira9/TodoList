@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TodosService } from 'src/app/todos/services/todos.service';
 
 @Component({
   selector: 'app-todos-header',
@@ -7,10 +8,15 @@ import { Component } from '@angular/core';
 export class HeaderComponent {
   text: string = '';
 
+  constructor(private todoService: TodosService) {}
+
   changeText(event: Event) {
     const target = event.target as HTMLInputElement;
     this.text = target.value;
   }
 
-  addTodo(): void {}
+  addTodo(): void {
+    this.todoService.addTodo(this.text);
+    this.text = '';
+  }
 }
