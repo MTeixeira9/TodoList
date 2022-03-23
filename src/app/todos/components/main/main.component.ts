@@ -10,9 +10,13 @@ import { FilterEnum } from '../../types/fiter.enum';
   templateUrl: './main.component.html',
 })
 export class MainComponent {
-  visibleTodos$!: Observable<TodoInterface[]>;
+  visibleTodos$: Observable<TodoInterface[]>;
+  noTodoClass$: Observable<boolean>;
 
   constructor(private todosService: TodosService) {
+    this.noTodoClass$ = this.todosService.todos$.pipe(
+      map((todos) => todos.length === 0)
+    );
     this.visibleTodos$ = combineLatest(
       this.todosService.todos$,
       this.todosService.filter$
